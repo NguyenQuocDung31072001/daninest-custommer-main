@@ -9,7 +9,8 @@ const { getMediaUrl, getWebAdminUrl, getWebCustomerUrl } = require('./common')
 
 const mailgun = require('mailgun-js')({
   apiKey: config.MAILGUN_API_KEY,
-  domain: config.MAILGUN_DOMAIN
+  domain: config.MAILGUN_DOMAIN,
+  url:"https://api.mailgun.net"
 })
 
 const dateFormatter = (date) => {
@@ -63,15 +64,17 @@ const sendMail = ({
   html
 }) => {
   const data = {
-    from: `${from} <daminest@mg.penphy.com>`,
+    // from: `${from} <daminest@mg.penphy.com>`,
+    from: `${from} <dungnguyen310701@gmail.com>`,
     to,
     subject: title,
     text: description,
     html
   }
-
+console.log({data});
   return new Promise((resolve, reject) => {
     mailgun.messages().send(data, (error, body) => {
+      console.log({error});
       const errorData = {
         message: error
       }
